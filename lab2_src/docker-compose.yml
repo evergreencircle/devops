@@ -1,0 +1,42 @@
+services:
+  frontend:
+    image: jup_lab_lab2:latest
+    ports:
+      - "10000:8888"
+    networks:
+      - front-tier
+      - back-tier
+    volumes:
+      - /opt:/opt
+        #configs:
+      # - httpd-config
+        # secrets:
+      #  - server-certificate
+
+  backend:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - db-data:/opt/lab1
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+    #driver: flocker
+    #driver_opts:
+    #  size: "10GiB"
+
+   #configs:
+     #  httpd-config:
+     # external: true
+
+     #secrets:
+     #server-certificate:
+     #external: true
+
+networks:
+  # The presence of these objects is sufficient to define them
+  front-tier: {}
+  back-tier: {}
